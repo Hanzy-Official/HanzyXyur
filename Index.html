@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rehan Pahriansah — Portfolio</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <meta name="description" content="Rehan Pahriansah - Developer & Programmer">
+  <meta name="keywords" content="Web Developer, Bot Developer, Programmer">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+    :root {
+      --bg-color: #0a0e14;
+      --second-bg: #111820;
+      --text-color: #e6edf3;
+      --main-color: #00ff88;
+      --card-bg: rgba(17, 24, 32, 0.85);
+      --border-glow: rgba(0, 255, 136, 0.15);
+      --shadow-glow: 0 0 40px rgba(0, 255, 136, 0.05);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Background pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse at 20% 50%, rgba(0, 255, 136, 0.03) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(0, 255, 136, 0.02) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(0, 255, 136, 0.02) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Preloader */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-color);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.6s ease;
+    }
+
+    #preloader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(0, 255, 136, 0.1);
+      border-top-color: var(--main-color);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Glass Effect */
+    .glass {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 20px;
+      box-shadow: var(--shadow-glow);
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 16px 8%;
+      background: rgba(10, 14, 20, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      transition: 0.3s;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--main-color), #00cc7a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      color: var(--text-color);
+      -webkit-text-fill-color: var(--text-color);
+      font-weight: 300;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 28px;
+      color: var(--main-color);
+      cursor: pointer;
+      background: none;
+      border: none;
+      transition: 0.3s;
+    }
+
+    .menu-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    .navbar {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .navbar a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-color);
+      text-decoration: none;
+      position: relative;
+      transition: 0.3s;
+      padding: 4px 0;
+      opacity: 0.7;
+      letter-spacing: 0.3px;
+    }
+
+    .navbar a:hover,
+    .navbar a.active {
+      opacity: 1;
+      color: var(--main-color);
+    }
+
+    .navbar a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--main-color);
+      transition: 0.3s ease;
+      border-radius: 4px;
+    }
+
+    .navbar a:hover::after,
+    .navbar a.active::after {
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      .navbar {
+        position: absolute;
+        top: 100%;
+        right: 5%;
+        background: rgba(17, 24, 32, 0.98);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        align-items: stretch;
+        width: 200px;
+        padding: 20px 24px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        transform: scale(0.9) translateY(-10px);
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      }
+
+      .navbar.active {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .navbar a {
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      }
+
+      .navbar a:last-child {
+        border-bottom: none;
+      }
+    }
+
+    /* Sections */
+    section {
+      padding: 100px 8% 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sub-title {
+      font-size: 38px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .sub-title span {
+      background: linear-gradient(135deg, var(--main-color), #00cc7a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Home */
+    .home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 80px;
+    }
+
+    .home-content {
+      max-width: 620px;
+      padding: 40px 44px;
+      border-left: 4px solid var(--main-color);
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .home-content h3 {
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text-color);
+      opacity: 0.8;
+      margin-bottom: 6px;
+    }
+
+    .home-content h1 {
+      font-size: 44px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff, var(--main-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .home-content h3 span {
+      color: var(--main-color);
+      -webkit-text-fill-color: var(--main-color);
+      font-weight: 600;
+    }
+
+    .home-content p {
+      font-size: 15px;
+      line-height: 1.8;
+      opacity: 0.7;
+      margin-bottom: 20px;
+    }
+
+    .home-sci {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .home-sci a {
+      width: 44px;
+      height: 44px;
+      border: 2px solid var(--main-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--main-color);
+      font-size: 20px;
+      transition: 0.3s;
+      text-decoration: none;
+    }
+
+    .home-sci a:hover {
+      background: var(--main-color);
+      color: var(--bg-color);
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 8px 30px rgba(0, 255, 136, 0.2);
+    }
+
+    .btn-box {
+      display: inline-block;
+      padding: 12px 32px;
+      background: linear-gradient(135deg, var(--main-color), #00cc7a);
+      color: #000;
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: 0.3s;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-box:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 40px rgba(0, 255, 136, 0.25);
+    }
+
+    .btn-box-outline {
+      display: inline-block;
+      padding: 10px 28px;
+      background: transparent;
+      color: var(--main-color);
+      font-weight: 600;
+      font-size: 13px;
+      border-radius: 50px;
+      text-decoration: none;
+      border: 2px solid var(--main-color);
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .btn-box-outline:hover {
+      background: var(--main-color);
+      color: #000;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 40px rgba(0, 255, 136, 0.15);
+    }
+
+    /* About */
+    .about {
+      display: flex;
+      gap: 50px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .about-img {
+      flex-shrink: 0;
+    }
+
+    .about-img img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--main-color);
+      box-shadow: 0 0 50px rgba(0, 255, 136, 0.15);
+      transition: 0.4s;
+    }
+
+    .about-img img:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 70px rgba(0, 255, 136, 0.3);
+    }
+
+    .about-text {
+      flex: 1;
+      min-width: 300px;
+      padding: 30px 34px;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .about-text .sub-title {
+      font-size: 28px;
+      text-align: left;
+      margin-bottom: 12px;
+    }
+
+    .about-text h4 {
+      font-size: 18px;
+      color: var(--main-color);
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 20px;
+      margin: 14px 0 16px;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .info-item i {
+      color: var(--main-color);
+      font-size: 16px;
+      width: 20px;
+    }
+
+    .info-item .label {
+      opacity: 0.5;
+      font-weight: 300;
+      margin-right: 4px;
+    }
+
+    .about-text p {
+      font-size: 14px;
+      line-height: 1.9;
+      opacity: 0.8;
+    }
+
+    .highlight {
+      color: var(--main-color);
+      font-weight: 600;
+    }
+
+    /* Services & Skills */
+    .services-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .services-list div {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      padding: 28px 22px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      transition: 0.35s;
+      text-align: center;
+    }
+
+    .services-list div:hover {
+      border-color: var(--main-color);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0, 255, 136, 0.08);
+    }
+
+    .services-list div i {
+      font-size: 38px;
+      color: var(--main-color);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .services-list div h2,
+    .services-list div h3 {
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .services-list div p {
+      font-size: 13px;
+      opacity: 0.6;
+      line-height: 1.6;
+    }
+
+    .services-list div .btn-box {
+      margin-top: 14px;
+      padding: 8px 24px;
+      font-size: 12px;
+    }
+
+    /* Certificates */
+    .certificates {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .cert-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      transition: 0.35s;
+    }
+
+    .cert-card:hover {
+      border-color: var(--main-color);
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0, 255, 136, 0.08);
+    }
+
+    .cert-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      background: #0a0e14;
+    }
+
+    .cert-info {
+      padding: 20px 24px 24px;
+      text-align: center;
+    }
+
+    .cert-info h3 {
+      color: var(--main-color);
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .cert-info p {
+      font-size: 13px;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .btn-small {
+      display: inline-block;
+      padding: 8px 22px;
+      background: transparent;
+      border: 2px solid var(--main-color);
+      color: var(--main-color);
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 12px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn-small:hover {
+      background: var(--main-color);
+      color: #000;
+    }
+
+    /* Contact */
+    .contact-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .contact-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      padding: 32px 36px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      text-align: center;
+      min-width: 220px;
+      transition: 0.35s;
+    }
+
+    .contact-card:hover {
+      border-color: var(--main-color);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0, 255, 136, 0.08);
+    }
+
+    .contact-card .icon-box {
+      width: 64px;
+      height: 64px;
+      border: 2px solid var(--main-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+      font-size: 28px;
+      color: var(--main-color);
+      transition: 0.3s;
+    }
+
+    .contact-card:hover .icon-box {
+      background: var(--main-color);
+      color: var(--bg-color);
+    }
+
+    .contact-card h3 {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .contact-card p {
+      font-size: 14px;
+      opacity: 0.5;
+      margin-bottom: 14px;
+    }
+
+    .btn-contact {
+      display: inline-block;
+      padding: 10px 28px;
+      background: linear-gradient(135deg, var(--main-color), #00cc7a);
+      color: #000;
+      font-weight: 700;
+      font-size: 13px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn-contact:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 40px rgba(0, 255, 136, 0.2);
+    }
+
+    .btn-contact i {
+      margin-right: 6px;
+    }
+
+    /* Footer */
+    .last-text {
+      text-align: center;
+      padding: 24px;
+      background: rgba(10, 14, 20, 0.8);
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 13px;
+      opacity: 0.4;
+    }
+
+    .top {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 100;
+    }
+
+    .top i {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: var(--main-color);
+      color: #000;
+      border-radius: 50%;
+      font-size: 22px;
+      transition: 0.3s;
+      box-shadow: 0 4px 20px rgba(0, 255, 136, 0.2);
+    }
+
+    .top i:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0, 255, 136, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .home-content {
+        padding: 28px 24px;
+      }
+
+      .home-content h1 {
+        font-size: 32px;
+      }
+
+      .sub-title {
+        font-size: 28px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-text .sub-title {
+        font-size: 24px;
+      }
+
+      .cert-card img {
+        height: 180px;
+      }
+
+      .contact-card {
+        padding: 24px 20px;
+        min-width: 160px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="spinner"></div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Rehan<span>.</span></div>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+    <i class='bx bx-menu'></i>
+  </button>
+  <nav class="navbar" id="navbar">
+    <a href="#home" class="active">Home</a>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#certificates">Certificates</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- HOME -->
+<section class="home" id="home">
+  <div class="home-content glass">
+    <h3>👋 Hai, Saya</h3>
+    <h1>Rehan Pahriansah</h1>
+    <h3><span class="text"></span></h3>
+    <p>Pengembang yang berdedikasi menciptakan solusi teknologi inovatif dan berkualitas tinggi.</p>
+    <div class="home-sci">
+      <a href="https://wa.me/6283132642575" aria-label="WhatsApp"><i class='bx bxl-whatsapp'></i></a>
+      <a href="https://t.me/Hanzyofficial1" aria-label="Telegram"><i class='bx bxl-telegram'></i></a>
+      <a href="https://github.com" aria-label="GitHub"><i class='bx bxl-github'></i></a>
+    </div>
+    <a href="#contact" class="btn-box">Hubungi Saya</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-img">
+    <img src="https://files.catbox.moe/cqwyz4.jpg" alt="Rehan Pahriansah">
+  </div>
+  <div class="about-text">
+    <div class="sub-title">About <span>Me</span></div>
+    <h4>Developer &amp; Programmer</h4>
+    <div class="info-grid">
+      <div class="info-item"><i class='bx bx-calendar'></i><span><span class="label">Lahir</span> 31 Des 2011</span></div>
+      <div class="info-item"><i class='bx bx-school'></i><span><span class="label">Sekolah</span> SMP Yata Cimanggu</span></div>
+      <div class="info-item"><i class='bx bx-code-alt'></i><span><span class="label">Profesi</span> Developer</span></div>
+      <div class="info-item"><i class='bx bx-map'></i><span><span class="label">Domisili</span> Indonesia</span></div>
+    </div>
+    <p>
+      Saya <span class="highlight">Rehan Pahriansah</span>, pengembang perangkat lunak dengan fokus pada bot WhatsApp dan otomatisasi digital. 
+      Lahir <span class="highlight">31 Desember 2011</span>, saya menempuh pendidikan di <span class="highlight">SMP Yata Cimanggu</span> 
+      dan terus mengasah kemampuan di bidang teknologi.
+    </p>
+    <p style="margin-top: 10px;">
+      Saya percaya teknologi adalah alat untuk memecahkan masalah. Setiap proyek saya kerjakan dengan mengutamakan kualitas dan pengalaman pengguna.
+      <span class="highlight">"Mari bangun sesuatu yang bermanfaat bersama!"</span>
+    </p>
+    <a href="#contact" class="btn-box" style="margin-top: 16px;">Hubungi Saya</a>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sub-title">My <span>Projects</span></div>
+  <div class="services-list">
+    <div>
+      <i class='bx bxs-bot'></i>
+      <h2>Vitality Bot</h2>
+      <p>Bot WhatsApp dengan fitur otomatisasi &amp; keamanan canggih.</p>
+      <a href="https://wa.me/6283132642575" class="btn-box">Hubungi Developer</a>
+    </div>
+    <div>
+      <i class='bx bx-code-curly'></i>
+      <h2>API Builder</h2>
+      <p>Membangun REST API cepat dan scalable untuk berbagai kebutuhan.</p>
+      <a href="#contact" class="btn-box">Info Lebih</a>
+    </div>
+    <div>
+      <i class='bx bx-palette'></i>
+      <h2>UI/UX Design</h2>
+      <p>Desain antarmuka modern dengan pengalaman pengguna optimal.</p>
+      <a href="#contact" class="btn-box">Info Lebih</a>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sub-title">My <span>Skills</span></div>
+  <div class="services-list">
+    <div><i class='bx bxl-nodejs'></i><h3>Node.js</h3><p>Bot &amp; backend development</p></div>
+    <div><i class='bx bxl-python'></i><h3>Python</h3><p>Otomatisasi &amp; scripting</p></div>
+    <div><i class='bx bxl-html5'></i><h3>HTML5</h3><p>Struktur semantik</p></div>
+    <div><i class='bx bxl-css3'></i><h3>CSS3</h3><p>Desain responsif &amp; modern</p></div>
+    <div><i class='bx bxl-javascript'></i><h3>JavaScript</h3><p>Frontend &amp; backend logic</p></div>
+    <div><i class='bx bxl-git'></i><h3>Git</h3><p>Version control &amp; kolaborasi</p></div>
+  </div>
+</section>
+
+<!-- CERTIFICATES -->
+<section id="certificates">
+  <div class="sub-title">My <span>Certificates</span></div>
+  <p style="text-align:center; opacity:0.5; margin-bottom:30px; font-size:14px;">Sertifikat kompetensi yang saya miliki</p>
+  <div class="certificates">
+    <div class="cert-card">
+      <img src="https://files.catbox.moe/hmdmm0.jpg" alt="Sertifikat Web Development">
+      <div class="cert-info">
+        <h3>Rehan Pahriansah</h3>
+        <p>Web Development</p>
+        <a href="https://files.catbox.moe/hmdmm0.jpg" target="_blank" class="btn-small">Lihat Sertifikat</a>
+      </div>
+    </div>
+    <div class="cert-card">
+      <img src="https://files.catbox.moe/qtrxyr.jpg" alt="Sertifikat Bot Developer">
+      <div class="cert-info">
+        <h3>Rehan Pahriansah</h3>
+        <p>Bot Developer</p>
+        <a href="https://files.catbox.moe/qtrxyr.jpg" target="_blank" class="btn-small">Lihat Sertifikat</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sub-title">My <span>Contact</span></div>
+  <p style="text-align:center; opacity:0.5; margin-bottom:10px; font-size:14px;">Mari terhubung! Klik tombol di bawah</p>
+  <div class="contact-wrapper">
+    <div class="contact-card">
+      <div class="icon-box"><i class='bx bxl-whatsapp'></i></div>
+      <h3>WhatsApp</h3>
+      <p>+62 831-3264-2575</p>
+      <a href="https://wa.me/6283132642575" target="_blank" class="btn-contact"><i class='bx bxl-whatsapp'></i> Chat Sekarang</a>
+    </div>
+    <div class="contact-card">
+      <div class="icon-box"><i class='bx bxl-telegram'></i></div>
+      <h3>Telegram</h3>
+      <p>@Hanzyofficial1</p>
+      <a href="https://t.me/Hanzyofficial1" target="_blank" class="btn-contact"><i class='bx bxl-telegram'></i> Chat Sekarang</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="last-text">
+  <p>© 2026 Rehan Pahriansah &mdash; All Rights Reserved</p>
+</div>
+
+<a href="#" class="top" aria-label="Back to top"><i class='bx bx-up-arrow-alt'></i></a>
+
+<script>
+  // ===== PRELOADER =====
+  window.addEventListener('load', () => {
+    document.getElementById('preloader').classList.add('hidden');
+  });
+
+  // ===== TYPED =====
+  const typed = new Typed('.text', {
+    strings: ['Developer', 'Web Developer', 'Bot Developer', 'Programmer'],
+    typeSpeed: 70,
+    backSpeed: 50,
+    backDelay: 1000,
+    loop: true
+  });
+
+  // ===== SCROLL REVEAL =====
+  ScrollReveal({
+    reset: false,
+    distance: '50px',
+    duration: 1200,
+    delay: 200,
+    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+  });
+
+  ScrollReveal().reveal('.home-content', { origin: 'left', interval: 200 });
+  ScrollReveal().reveal('.about-img', { origin: 'left' });
+  ScrollReveal().reveal('.about-text', { origin: 'right' });
+  ScrollReveal().reveal('.services-list div', { origin: 'bottom', interval: 150 });
+  ScrollReveal().reveal('.cert-card', { origin: 'bottom', interval: 150 });
+  ScrollReveal().reveal('.contact-card', { origin: 'bottom', interval: 150 });
+
+  // ===== NAVBAR MOBILE =====
+  const menuToggle = document.getElementById('menuToggle');
+  const navbar = document.getElementById('navbar');
+
+  menuToggle.addEventListener('click', () => {
+    navbar.classList.toggle('active');
+    menuToggle.innerHTML = navbar.classList.contains('active')
+      ? '<i class="bx bx-x"></i>'
+      : '<i class="bx bx-menu"></i>';
+  });
+
+  // Close navbar on link click (mobile)
+  document.querySelectorAll('.navbar a').forEach(link => {
+    link.addEventListener('click', () => {
+      navbar.classList.remove('active');
+      menuToggle.innerHTML = '<i class="bx bx-menu"></i>';
+    });
+  });
+
+  // ===== NAVBAR ACTIVE LINK =====
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.navbar a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const top = section.offsetTop - 120;
+      if (window.scrollY >= top) {
+        current = section.getAttribute('id');
+      }
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
+    });
+  });
+</script>
+
+</body>
+</html>
